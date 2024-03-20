@@ -1,0 +1,503 @@
+:root{
+    --background-color:#fff;
+    --background-light:#fff;
+    --shadow-color:rgba(0,0,0,0.2);
+    --primary-color:red;
+    --text-color:#0A0A0A;
+    --text-light:#575757;
+    --font-size:16px;
+    --animation-speed:1;
+
+}
+
+@function getAnimationDuration($duration: number){
+    @return calc($duration * var(--animation-speed));
+}
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-size: var(--font-size);
+    font-family: 'Roboto', sans-serif;
+    padding-top: -1px;
+    top:0;
+    background-color:var(--background-light) ;
+}
+a{
+    text-decoration: none;
+}
+img{
+    object-fit: cover;
+}
+@import "partials/_navbar.scss";
+.section{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 3vw;
+    margin-top: 3vw;
+    &.d-block{
+        display: block;
+    }
+    .title{
+        color: var(--text-color);
+        font-size: 2.5em;
+        margin-bottom: .25em;
+        font-weight: 900;
+    }
+    .info{
+        color: var(--text-light);
+        font-size: 1em;
+        letter-spacing: 1px;
+        line-height: 1.3;
+        margin-bottom: 1.25em;
+    }
+    .col{
+        width: 50%;
+    }
+}
+.myfridge-container{
+display: grid;
+grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+grid-gap: 1.5em;
+}
+@import "partials/_product-section.scss";
+@import "partials/_hero-section.scss";
+@import "partials/improve-section.scss";
+@import "partials/_footer.scss";
+@import "partials/_makeameal.scss";
+@import "partials/targets.scss";
+@import "partials/_typesofmeals.scss";
+@import "partials/journal.scss";
+@import "partials/journal-entry.scss";
+
+
+.options-container{
+    box-shadow: 0 5px 10px var(--shadow-color);
+    padding: 1em;
+    border-radius: 5px;
+    border-left: .5em solid var(--primary-color);
+    background-color: var(--background-light);
+    margin-top: 1em;
+    display: flex;
+    gap:1em;
+    .option{
+        height: 3.5em;
+        width: 3.5em;
+        box-shadow:0 3px 6px var(--shadow-color);
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &.light{
+            background-color: #fff;
+        }
+        &.dark{
+            background-color:rgb(29,29,29); 
+        }
+        .check{
+            height: 2.5em;
+            width: 2.5em;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 5px var(--shadow-color);
+            svg{
+                height: 1.5em;
+                width: 1.5em;
+            }
+        }
+        
+    }
+    .btn span{
+        display: inline-block;
+        margin-left: .5em;
+
+    }
+}
+.d-block h2{
+font-size: 1.75em;
+color:var(--text-color);
+padding: .5em;
+}
+
+@import "partials/previous-searches.scss";
+.main{
+    padding-block:3vw ;
+}
+.container{
+    padding-inline:10vw ;
+}
+.btn{
+    border: none;
+    outline:none;
+    background-color: var(--primary-color);
+    color:#fff;
+    padding: .75em 1em;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight:bold ;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    box-shadow: 0 3px 6px var(--shadow-color);
+    &:hover{
+        box-shadow: 0 1px 3px var(--shadow-color);
+    }
+}
+
+  
+.custom-image{
+    background-color: red;
+    height: 0;
+    width: 100%;
+    position: relative;
+    img{
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height: 100%;
+    }
+    
+
+}
+@import "partials/_animations.scss";
+
+@media screen and (max-width:1280px){
+    .container{
+        padding-inline: 18vw ;
+    }
+
+}
+@media screen and (max-width:1050px){
+    .container{
+        padding-inline: 12vw ;
+    }
+
+}
+@media screen and (max-width:768px){
+    .navbar{
+       
+        .nav-links{
+            display: none;
+        }
+        .sidebar-btn{
+            display: block;
+        }
+    }
+    .section{
+        .col{
+            width: 100%;
+            padding: 0 !important;
+            text-align: center;
+            margin-bottom: 2em;
+        }
+        .skill-item{
+            display: inline-block;
+            margin: .75em;
+           
+        }
+        .section.improve-skills .btn{
+            display: block;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+        .container{
+            padding-inline: 6vw ;
+        }
+        .footer{
+            grid-template-columns: repeat(4,1fr);
+            .footer-section:nth-child(1){
+                grid-column: span 4;
+            }
+            .footer-section:nth-child(2),  .footer-section:nth-child(3){
+                grid-column: span 2;
+
+            }
+        }
+    }
+  
+    
+
+}
+@media screen and (max-width:480px){
+    .container{
+        padding-inline: 3vw ;
+    }
+
+}
+/* CSS */
+.bar {
+    /* Your existing styles */
+    position: absolute;
+  width: 25px; /* Width of your bars */
+  height: 3px; /* Height of your bars */
+  background-color: #000; /* Color of your bars */
+  transition: transform 0.3s ease, opacity 0.3s ease;  }
+  
+  .bar.active:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  
+  .bar.active:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .bar.active:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);  }
+  
+  /* Make sure your bars are positioned in a way that allows them to form an X */
+  .sidebar-toggle {
+    position: relative;
+    width: 35px; // Adjust the width as needed
+    height: 30px; // Adjust the height as needed
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+  
+    .bar {
+      background-color: #000; // Color of your bars
+      height: 3px; // Height of your bars
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      position: absolute;
+      left: 0; // Ensure bars are horizontally centered
+      right: 0;
+      margin: auto; // This helps in centering
+    }
+  
+    &.active {
+      .bar:nth-child(1) {
+        transform: rotate(45deg);
+        transform-origin: center; // Set the origin of transformation
+      }
+  
+      .bar:nth-child(2) {
+        opacity: 0;
+      }
+  
+      .bar:nth-child(3) {
+        transform: rotate(-45deg);
+        transform-origin: center;
+      }
+    }
+  }
+  .fridge-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    //gap: 140px; /* Adjust the gap between buttons */
+    justify-content: space-between;
+  }
+  
+  .view-btn {
+    background-color: #e0c9c9;
+    color: white; /* Text color set to white */
+    /* ... other styles ... */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 3px 6px var(--shadow-color);
+    transition: background-color 0.3s ease;
+    margin-right: auto;
+    
+  }
+ 
+  .more-info-btn {
+    background-color: #e0c9c9;
+    color: red;
+    border-radius: 50%; /* Makes the button round */
+    width: 45px; /* Fixed width */
+    height: 40px; /* Fixed height to make it a circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Removes padding to prevent the button from being oval */
+    border: none;
+    cursor: pointer;
+    font-size: 1em; /* Adjust the font size of the plus */
+    
+    margin-top: 18px;
+  }
+  
+  .more-info-btn:hover {
+    background-color: #0056b3;
+  }
+  .fridge-card-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  .more-info-btn, .less-info-btn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 50%; /* Rounded corners */
+    
+  }
+  
+  /* Style for the minus button specifically */
+  .less-info-btn {
+    background-color: #f44336; /* Red */
+  }
+  .more-info-btn:hover, .less-info-btn:hover {
+    opacity: 0.8;
+  }
+  
+  
+  .meal-card {
+    width: calc(33.333% - 20px); /* Ajustează la 3 pe rând, minus margin */
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* O mică umbră pentru stil */
+    border-radius: 4px; /* Margini rotunjite */
+    overflow: hidden; /* Ascunde ce depășește marginile rotunjite */
+}
+.meal-card-info {
+    padding: 10px;
+    text-align: center; /* Centrarea textului */
+}
+
+.meal-title {
+    margin: 10px 0; /* Spațiu adițional sus și jos pentru titlu */
+}
+
+.view-meal-btn {
+    background-color: #f44336; /* Un roșu vibrant pentru buton */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0; /* Spațiu adițional sus și jos pentru buton */
+    cursor: pointer;
+    // border-radius: '50px';
+}
+  
+  /* styles.css */
+  .desserts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    //justify-content: center; /* Acest lucru va centra cardurile în spațiul disponibil */
+}
+
+@media (min-width: 768px) {
+    .desserts-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+.dessert-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    max-width: 400px; /* Ajustează această valoare după preferințe */
+    margin: 0 auto; 
+}
+
+.dessert-card:hover {
+    transform: translateY(-5px);
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+}
+
+.dessert-card:hover .image-container img {
+    transform: scale(1.05);
+}
+
+.dessert-card-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.dessert-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom:  10px;
+}
+
+.view-dessert-btn {
+    background-color: #e0c9c9;
+    color: white; /* Text color set to white */
+    /* ... other styles ... */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 3px 6px var(--shadow-color);
+    transition: background-color 0.3s ease;
+    margin-right: auto;
+    
+}
+
+.view-dessert-btn:hover {
+    background-color: #0056b3;
+}
+/* App.css sau orice alt fișier CSS pe care îl folosești */
+.dessert-details-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff3e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.dessert-details-header {
+    color: #ff5722;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.dessert-detail {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.dessert-detail strong {
+    color: #ff9800;
+}
+
+.dessert-image-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dessert-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+  
+  

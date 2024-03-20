@@ -1,0 +1,39 @@
+.footer{
+    background-color: red;
+    color: #fff;
+    padding-block: 3em;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-gap:1em ;
+    .footer-section{
+        p{
+            opacity: .9;
+            margin-bottom: .5em;
+        }
+        p.title{
+            opacity: 1;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 1em;
+        }
+    }
+}
+.section.quote{
+    display: block;
+    .quote-text{
+        font-size: 1.2em;
+        line-height: 1.3;
+        color: var(--text-color);
+        svg{
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-right: .5em;
+        }
+    }
+    .quote-author{
+        color: var(--text-light);
+        text-align: right;
+        margin-top: 1em;
+
+    }
+}

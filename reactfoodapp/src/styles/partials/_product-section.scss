@@ -1,0 +1,30 @@
+.fridge-card{
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 15px 10px var(--shadow-color);
+    .fridge-card-info{
+     padding: 15px;
+    }
+    .custom-image{
+     z-index: -1;
+     background-color:white;
+    }
+   .fridge-title{
+     font-size: 1.25em;
+     font-weight: bold;
+     margin-bottom: .5em;
+     margin-left: 2.75em;
+     color: var(--text-color);
+     margin-top: .10em;
+     margin-bottom: 3em;
+   }
+   .view-btn{
+     font-size: 1em;
+     font-weight: bold;
+     color:var(--primary-color);
+     margin-top: .75em;
+     display: inline-block;
+     margin-bottom: .75em;
+     margin-left: .75em;
+   }
+ }

@@ -1,0 +1,44 @@
+.make-a-meal-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px; // Provides consistent space between elements
+    margin: 20px; // Adds some space around the container
+  
+    .image-text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%; // Use a percentage to make it responsive
+      max-width: 300px; // Maximum width for large screens
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Soft shadow for depth
+      border-radius: 8px; // Rounded corners
+      overflow: hidden; // Ensures nothing spills out of the container
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+      &:hover {
+        transform: translateY(-5px); // Slight lift effect on hover
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); // Enhance shadow on hover
+      }
+  
+      p.meal-description {
+        font-size: 1.5rem; // Responsive font size
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        background: #f8f8f8; // Light background for the text for better readability
+        width: 100%; // Ensures the background stretches across the width
+        margin: 0; // Removes default margin
+      }
+  
+      img.meal-image {
+        display: block; // Removes any inline spacing
+        width: 100%; // Responsive image size
+        height: auto; // Maintain aspect ratio
+      }
+    }
+  }
+  .footer.container{
+    margin-top:12.30em;
+  }
+  

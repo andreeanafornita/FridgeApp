@@ -1,0 +1,135 @@
+/* journal.scss */
+.journal {
+    background: linear-gradient(135deg, #ffcc00, #ff6699);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 1s ease-in-out;
+    margin-bottom: 1px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .journal h2 {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: slideInRight 1s ease-in-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(20px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  .entry-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .journal-entry {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    }
+  
+    .view-entry {
+      .entry-text {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 15px;
+        line-height: 1.4;
+      }
+  
+      .entry-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+  
+        .button {
+          padding: 10px 16px;
+          font-size: 16px;
+          border: none;
+          cursor: pointer;
+          margin-left: 10px;
+          border-radius: 6px;
+          transition: background-color 0.3s;
+  
+          &.btnEdit {
+            background-color: #ff6699;
+            color: #fff;
+  
+            &:hover {
+              background-color: #ff3366;
+            }
+          }
+  
+          &.btnDelete {
+            background-color: #ffcc00;
+            color: #333;
+  
+            &:hover {
+              background-color: #ff9900;
+            }
+          }
+        }
+      }
+    }
+  
+    .edit-entry {
+      textarea {
+        width: 100%;
+        height: 150px;
+        resize: vertical;
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        margin-bottom: 15px;
+      }
+  
+      .button {
+        background-color: #ffcc00;
+        color: #333;
+        border: none;
+        cursor: pointer;
+        padding: 12px 20px;
+        font-size: 18px;
+        border-radius: 6px;
+        transition: background-color 0.3s;
+  
+        &:hover {
+          background-color: #ff9900;
+        }
+      }
+    }
+  }

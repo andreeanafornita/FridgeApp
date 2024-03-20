@@ -1,0 +1,87 @@
+// Targets.scss
+$primary-color: #4e79a7; // Primary color for progress bars
+$background-color: #f4f7fa; // Light background color for progress containers
+$text-color: #333; // Main text color
+$spacing-unit: 10px; // Base unit for spacing
+
+.targets-container {
+  padding: 2 * $spacing-unit;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: $spacing-unit;
+  max-width: 600px; // Maximum width of the container
+  margin: $spacing-unit auto;
+  margin-top: 70px;
+  
+  .targets-title {
+    font-size: 24px;
+    color: $text-color;
+    text-align: center;
+    margin-bottom: 2 * $spacing-unit;
+
+  }
+
+  .targets-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    
+    .target-item {
+      margin-bottom: 3 * $spacing-unit; // Increased space for icon or image
+      padding-bottom: 2 * $spacing-unit; // Space for icon or image
+      border-bottom: 1px solid #eaeaea; // Visual separation of items
+     
+      
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+      .target-item:hover {
+        cursor: pointer;
+        background-color: #f0f0f0; /* Example hover effect */
+        transition: background-color 0.3s ease;
+        
+      }
+
+      .target-label {
+        font-size: 18px;
+        color: $text-color;
+        margin-bottom: 1 * $spacing-unit; // Space above the progress bar
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative; // Needed for absolute positioning of pseudo-elements
+        .fa-icon {
+          margin-right: $spacing-unit; // Add some space between the icon and the text
+        }
+        // Pseudo-element for bordered text effect
+        &:before {
+          content: attr(data-text); // Dynamically set the content to the text of the label
+          position: absolute;
+          top: 0;
+          left: 0;
+          z-index: -1;
+          color: transparent;
+          padding: 3px; // Adjust the padding to control the border size
+          border: 1px solid $text-color; // This creates the border around the text
+          border-radius: 4px; // Optional: if you want rounded corners
+        }
+      }
+      
+
+      .progress-container {
+        background-color: $background-color;
+        border-radius: $spacing-unit;
+        overflow: hidden; // Ensure the progress bar stays within the container
+
+        .progress-bar {
+          height: 20px;
+          border-radius: $spacing-unit;
+          background-color: var(--primary-color);
+          transition: width 0.5s ease-in-out;
+        }
+      }
+    }
+  }
+
