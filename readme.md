@@ -1,1 +1,1 @@
-asd
+Fridge Fest app
