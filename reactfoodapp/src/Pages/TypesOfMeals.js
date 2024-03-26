@@ -8,9 +8,14 @@ export default function TypesOfMeals() {
   const handleImageClick = (path) => {
     navigate(path);
   };
-
+  const profileStyle = {
+      
+    marginBottomTargets: {
+        marginBottom: '-3em'
+    },
+};
   return (
-    <div className="make-a-meal-container">
+    <div className="make-a-meal-container" style={{...profileStyle.marginBottomTargets}}>
       {/* First Image and Text */}
       <div className="image-text-container" onClick={() => handleImageClick('/mealsPage')}>
         <p className="meal-description">Make a meal based on what you have in your fridge</p>

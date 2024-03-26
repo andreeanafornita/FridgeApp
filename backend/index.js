@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Middleware pentru verificarea JWT-ului, cu excepția rutelor specificate
-app.use(jwt({ secret: jwtSecret, algorithms: ['HS256'] }).unless({ path: ['/alltargets/get','/users/', '/users/login'] }));
+app.use(jwt({ secret: jwtSecret, algorithms: ['HS256'] }).unless({ path: ['/users/', '/users/login'] }));
 //user route
 const userRouter=require('./routes/UserRouter.js')
 app.use("/users", userRouter)

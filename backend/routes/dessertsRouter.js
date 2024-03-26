@@ -30,26 +30,41 @@ const authenticateJWT = passport.authenticate('jwt', { session: false });
 router.get('/generateDessertFromProducts', authenticateJWT, async (req, res) => {
   try {
     const userId = req.user.id_user;
-    const userProductIds = (await ProductsXUser.findAll({
-      where: { userID_user: userId, units: { [Sequelize.Op.gt]: 0 } },
-      attributes: ['productsID_product']
-    })).map(up => up.productsID_product);
 
+    // Obținerea produselor utilizatorului cu units > 0
+    const userProducts = await ProductsXUser.findAll({
+      where: { userID_user: userId, units: { [Sequelize.Op.gt]: 0 } },
+      attributes: ['productsID_product', 'units']
+    });
+
+    // Conversia rezultatelor într-un format utilizabil
+    const userProductsMap = userProducts.reduce((acc, cur) => {
+      acc[cur.productsID_product] = cur.units;
+      return acc;
+    }, {});
+
+    // Obținerea tuturor deserturilor, inclusiv atributul 'id_dessertsXproducts' în 'DessertsXProducts'
     const allDesserts = await Desserts.findAll({
       include: [{
         model: DessertsXProducts,
         as: 'DessertsProducts',
+        attributes: ['id_dessertsXproducts', 'productsID_desserts', 'dessertsID_dessert', 'quantity_product', 'units_required_dessert'], // Includem 'id_dessertsXproducts'
         include: [{
           model: Products,
-          as: 'Products'
+          as: 'Products',
+          attributes: ['id_product', 'name_product'] // Specificarea atributelor necesare
         }]
       }]
     });
 
+    // Filtrarea deserturilor valide pe baza produselor utilizatorului și a unităților necesare
     const validDesserts = allDesserts.filter(dessert => {
-      const dessertProductIds = dessert.DessertsProducts.map(dxp => dxp.productsID_desserts);
-      
-      return dessertProductIds.every(pid => userProductIds.includes(pid));
+      return dessert.DessertsProducts.every(dxp => {
+        // Verificarea dacă utilizatorul are produsul necesar cu unități suficiente
+        const requiredUnits = dxp.units_required_dessert;
+        const userUnits = userProductsMap[dxp.productsID_desserts];
+        return userUnits && userUnits >= requiredUnits;
+      });
     });
 
     res.json(validDesserts);
@@ -58,6 +73,7 @@ router.get('/generateDessertFromProducts', authenticateJWT, async (req, res) => 
     res.status(500).send('Internal Server Error');
   }
 });
+
 router.get('/details/:id', authenticateJWT, async (req, res) => {
   try {
     const dessert = await Desserts.findOne({

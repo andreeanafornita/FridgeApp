@@ -72,9 +72,14 @@ const YourTargets = () => {
             console.error("There was a problem with deleting the target:", error);
         }
     };
-    
+    const profileStyle = {
+      
+        marginBottomStyle: {
+            marginBottom: '4em'
+        },
+    };
     return (
-        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px' }}>
+        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px',...profileStyle.marginBottomStyle }}>
             <h1 style={{ fontSize: '48px', color: 'red', textAlign: 'center' }}>Your Targets</h1>
             <div style={{ marginTop: '30px' }}>
                 {yourTargets.length > 0 ? yourTargets.map(target => {

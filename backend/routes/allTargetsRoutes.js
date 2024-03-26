@@ -45,7 +45,8 @@ router.put('/edit/:id_target', async (req, res) => {
     }
   });
   // Fetch all targets
-router.get('/get', async (req, res) => {
+// Adaugă authenticateJWT ca middleware înaintea handler-ului tău de route
+router.get('/get', authenticateJWT, async (req, res) => {
   try {
       const targets = await AllTargets.findAll();
       res.json(targets);
@@ -53,6 +54,7 @@ router.get('/get', async (req, res) => {
       res.status(500).json({ error: error.message });
   }
 });
+
 router.get('/hardTargets', authenticateJWT, async (req, res) => {
   try {
     const hardTargets = await AllTargets.findAll({

@@ -43,11 +43,7 @@ import RecommendedDesserts from "./Pages/RecommendedDesserts";
 import ReviewCard from "./components/ReviewCard";
 import ProductSuggestion from "./Pages/ProductSuggestion";
 function App() {
-  const journalEntries = [
-    { id: 1, text: "Entry 1" },
-    { id: 2, text: "Entry 2" },
-    { id: 3, text: "Entry 3" },
-  ];
+ 
   return (
     <Router>
       {/* {isNavbarAndFooterVisible && <Navbar />} */}

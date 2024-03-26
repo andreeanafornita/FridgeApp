@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const DessertsXProducts = sequelize.define('DessertsXProducts', {
+    id_dessertsXproducts: { // Adăugăm această linie
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     productsID_desserts: {
       type: DataTypes.INTEGER(10),
       allowNull: false,
@@ -37,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
     quantity_proteins_product: {
       type: DataTypes.FLOAT,
       allowNull: true
+    },
+    units_required_dessert: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     tableName: 'DessertsXProducts',

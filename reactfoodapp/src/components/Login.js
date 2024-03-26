@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
+import backgroundImage from '../images/logo_rosu.png';
 
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -52,15 +53,29 @@ const Login = () => {
     minHeight: '90vh',
     backgroundColor: '#FFFFFF', // Changed to white background
   };
+  const backgroundStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: '95vh', // Asigură-te că pagina are înălțimea completă a viewport-ului
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: '100% auto', // Scala imaginea pe lățime, menține proporțiile
+  backgroundPosition: 'center center', 
+    backgroundRepeat: 'no-repeat',
+   
+  };
+  
 
+  
   const cardStyle = {
     backgroundColor: '#FFEEEE', // Changed to very light red
-    padding: '20px',
+    padding: '40px',
     borderRadius: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    border: '7px solid red',
+    border: '7px solid black',
     width: '100%',
-    maxWidth: '400px',
+    maxWidth: '450px',
     margin: 'auto',
     position: 'absolute',
     top: '50%',
@@ -99,7 +114,7 @@ const Login = () => {
   const inputStyle = {
     backgroundColor: 'white',
     color: 'black', // Text in inputs is black
-    borderColor: 'red', // Added red border for inputs
+    borderColor: 'grey', // Added red border for inputs
     borderWidth: '2px', // Make input border thicker
     borderStyle: 'solid',
     marginBottom: '1rem', // Increase spacing after the input
@@ -117,9 +132,12 @@ const Login = () => {
   };
  
   return (
+    <div style={backgroundStyle}>
     <div style={centerStyle}>
       <div className="login-container" style={cardStyle}>
         <Card title='Login' className="card" style={titleStyle}>
+          <div>
+          
           <div className="p-fluid" style={{ marginBottom: '20px' }}>
             <div className="p-field">
               <label htmlFor="username" style={labelStyle}>Username</label>
@@ -149,8 +167,10 @@ const Login = () => {
           </div>
           {error && <div style={errorStyle}>{error}</div>}
           <Button id="loginBtn" label="Submit" style={submitButtonStyle} onClick={handleSubmit} />
+          </div>
         </Card>
       </div>
+    </div>
     </div>
   );
   

@@ -42,10 +42,15 @@ export default function DessertsPageBudget ()  {
     const handleViewDessertClick = (dessertId) => {
       navigate(`/dessert/${dessertId}`);
     };
-  
+    const profileStyle = {
+      
+      marginBottomTargets: {
+          marginBottom: '8em'
+      },
+  };
     return (
-      <div style={{ paddingTop: '40px' }}>
-        <h2>Our recommendation desserts:</h2>
+      <div style={{ paddingTop: '40px',...profileStyle.marginBottomTargets }}>
+        <h2>Desserts that are in your budget interval:</h2>
         <div style={{ paddingTop: '20px' }}></div>
         <div className="desserts-container">
           {desserts.length > 0 ? (

@@ -177,5 +177,52 @@ router.get('/current', authenticateJWT, async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
   }
 });
+// Schimbarea parolei
+router.put('/updatePassword', authenticateJWT, async (req, res) => {
+  const userId = req.user.id_user;
+  const { currentPassword, newPassword } = req.body;
+
+  try {
+      const user = await User.findByPk(userId);
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+
+      const validPassword = await bcrypt.compare(currentPassword, user.password);
+      if (!validPassword) {
+          return res.status(401).send('Current password is incorrect');
+      }
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedNewPassword;
+      await user.save();
+
+      res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+      console.error('Error updating the password:', error);
+      res.status(500).send('Internal server error');
+  }
+});
+// Schimbarea username-ului
+router.put('/updateUsername', authenticateJWT, async (req, res) => {
+  const userId = req.user.id_user;
+  const { newUsername } = req.body;
+
+  try {
+      const user = await User.findByPk(userId);
+      if (!user) {
+          return res.status(404).send('User not found');
+      }
+
+      user.username = newUsername;
+      await user.save();
+
+      res.status(200).json({ message: 'Username updated successfully', username: user.username });
+  } catch (error) {
+      console.error('Error updating the username:', error);
+      res.status(500).send('Internal server error');
+  }
+});
+
 
 module.exports = router;

@@ -139,6 +139,7 @@ setTimeout(() => {
     borderRadius: '15px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     backgroundColor: '#ffffff',
+    marginBottom:'-4em'
   };
 
   const buttonStyle = {

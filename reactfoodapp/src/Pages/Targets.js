@@ -29,28 +29,34 @@ const handleClick = (targetId) => {
     }
 
     
+    const profileStyle = {
+      
+      marginBottomTargets: {
+          marginBottom: '-10em'
+      },
+  };
+
+
+
+    return (
+      <div className="targets-container" style={{...profileStyle.marginBottomTargets}}>
+        <h1 className="targets-title">Targets</h1>
+        <div className="targets-list">
+          {targetsData.map(target => (
+            <div key={target.id} className="target-item" onClick={() => handleClick(target.id)}>
+              <div className="target-label" data-text={target.label}>
+                <FontAwesomeIcon icon={target.icon} />
+                {target.label}
+              </div>
   
-
-
-
-  return (
-    <div className="targets-container">
-      <h1 className="targets-title">Targets</h1>
-      <div className="targets-list">
-        {targetsData.map(target => (
-          <div key={target.id} className="target-item" onClick={() => handleClick(target.id)}>
-            <div className="target-label" data-text={target.label}>
-            <FontAwesomeIcon icon={target.icon} />
-                {target.label}</div>
-
-            <div className="progress-container">
-              <div className="progress-bar" style={{ width: `${target.value}%` }}></div>
+              <div className="progress-container">
+                <div className="progress-bar" style={{ width: `${target.value}%` }}></div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
 };
 
 export default Targets;

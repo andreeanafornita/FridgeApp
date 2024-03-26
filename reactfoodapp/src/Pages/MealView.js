@@ -39,13 +39,14 @@ export default function MealView() {
   if (!mealDetails || Object.keys(mealDetails).length === 0) {
     return <div style={{ padding: '20px', fontSize: '18px' }}>No meal details available.</div>;
   }
+
   return (
     <div>
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px',marginTop:'15px', background: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)', borderRadius: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
       <h2 style={{ fontSize: '32px', marginBottom: '20px', color: '#fff', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' }}>Meal Details</h2>
       <div style={{ backgroundColor: '#fff', borderRadius: '16px', padding: '20px', marginBottom: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px', color: '#333' }}>{mealDetails.name_meal}</p>
-        <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Calories: {mealDetails.calories_meal}g</p>
+        <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Calories: {mealDetails.calories_meal}kcal</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Glucides: {mealDetails.glucides_meal}g</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Lipides: {mealDetails.lipides_meal}g</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Proteins: {mealDetails.proteins_meal}g</p>

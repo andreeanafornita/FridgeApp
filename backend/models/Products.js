@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     base_proteins_product: {
       type: DataTypes.FLOAT,
       allowNull: false
+    },
+    isLiquid:{
+      type :DataTypes.BOOLEAN ,
+      allowNull:true
     }
   }, {
     tableName: 'Products',

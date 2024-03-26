@@ -131,16 +131,21 @@ export default function ProductView() {
     return <div>Error: {error}</div>;
   }
 
+  const quantityDisplay = productDetails.isLiquid ? 
+  `${productDetails.base_quantity_product} ml` : 
+  `${productDetails.base_quantity_product} g`;
+  console.log({ expirationDates, isLoading });
+
   return (
     <div style={styles.container}>
       <h2>Product Details</h2>
       <div style={styles.productDetails}>
         <p style={styles.detail}>Name: {productDetails.name_product}</p>
-        <p style={styles.detail}>Base Quantity: {productDetails.base_quantity_product}g</p>
-        <p style={styles.detail}>Base Calories: {productDetails.base_calories_product}g</p>
-        <p style={styles.detail}>Base Glucides: {productDetails.base_glucides_product}g</p>
-        <p style={styles.detail}>Base Lipides: {productDetails.base_lipides_product}g</p>
-        <p style={styles.detail}>Base Proteins: {productDetails.base_proteins_product}g</p>
+        <p style={styles.detail}>Base Quantity: {quantityDisplay}</p>
+        <p style={styles.detail}>Base Calories: {productDetails.base_calories_product} kcal</p>
+        <p style={styles.detail}>Base Glucides: {productDetails.base_glucides_product} g</p>
+        <p style={styles.detail}>Base Lipides: {productDetails.base_lipides_product} g</p>
+        <p style={styles.detail}>Base Proteins: {productDetails.base_proteins_product} g</p>
       </div>
       <div style={styles.expirationSection}>
         <label style={styles.label} htmlFor="expiration-date">Set Expiration Date:</label>
@@ -153,22 +158,24 @@ export default function ProductView() {
         />
         <button style={styles.button} onClick={handleSetExpirationDate}>Save Expiration Date</button>
       </div>
-      {/* Verifică dacă există date de expirare salvate înainte de a afișa secțiunea */}
-      {expirationDates.length > 0 && (
-        <div style={styles.expirationDatesSection}>
-          <h3>Data saved:</h3>
-          {expirationDates.map((date, index) => (
+      <div style={styles.expirationDatesSection}>
+        <h3>Data saved:</h3>
+        {expirationDates.length > 0 ? (
+          expirationDates.map((date, index) => (
             <p key={index} style={{ color: checkIfExpired(date) ? 'red' : 'black' }}>
               {date} {checkIfExpired(date) && <span style={{ fontWeight: 'bold' }}>PRODUCT EXPIRED!</span>}
             </p>
-          ))}
-        </div>
-      )}
+          ))
+        ) : (
+          !isLoading && <p>N/A</p> // Se afișează N/A dacă nu există date de expirare salvate și s-a terminat încărcarea datelor
+        )}
+      </div>
       {productDetails.base64CodIamgeProduct && (
         <img style={styles.image} src={`${productDetails.base64CodIamgeProduct}`} alt="Product" />
       )}
     </div>
   );
+  
   
 }
 

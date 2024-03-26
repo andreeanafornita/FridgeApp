@@ -46,22 +46,30 @@ export default function MealsPageBudget ()  {
   const handleViewMealClick = (mealId) => {
     navigate(`/meal/${mealId}`);
   };
+  const profileStyle = {
+      
+    marginBottomTargets: {
+        marginBottom: '12em'
+    },
+};
+ // ... other code remains the same
 
-  return (
-    <div style={{ paddingTop: '40px' }}> {/* Ajustează această valoare în funcție de înălțimea navbar-ului tău */}
-      <h2>Our recommandation meals:</h2>
-      <div style={{ paddingTop: '20px' }}></div>
-      <div className="meals-container">
-        {meals.length > 0 ? (
-          meals.map((meal, index) => (
-            <MealCard key={index} meal={meal} onMealSelect={() => navigate(`/meal/${meal.id_meal}`)} />
-          ))
-        ) : (
-          <p>No meals available with the current budget! Please try again with another budget.</p>
-        )}
-      </div>
+return (
+  <div style={{ paddingTop: '40px',...profileStyle.marginBottomTargets }}> {/* Ajustează această valoare în funcție de înălțimea navbar-ului tău */}
+    <h2>Meals that are in your budget interval:</h2>
+    <div style={{ paddingTop: '20px' }}></div>
+    <div className="meals-container">
+      {meals.length > 0 ? (
+        meals.map((meal, index) => (
+          <MealCard key={index} meal={meal} onMealSelect={() => navigate(`/meal/${meal.id_meal}`)} />
+        ))
+      ) : (
+        <p>No meals available within your budget! Please try again with a different budget.</p>
+      )}
     </div>
-  );
+  </div>
+);
+
 };
 
 

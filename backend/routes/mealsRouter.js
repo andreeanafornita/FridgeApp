@@ -34,26 +34,41 @@ const authenticateJWT = passport.authenticate('jwt', { session: false });
 router.get('/generateMealFromProducts', authenticateJWT, async (req, res) => {
   try {
     const userId = req.user.id_user;
-    const userProductIds = (await ProductsXUser.findAll({
-      where: { userID_user: userId, units: { [Sequelize.Op.gt]: 0 } },
-      attributes: ['productsID_product']
-    })).map(up => up.productsID_product);
 
+    // Obținerea produselor utilizatorului cu units > 0
+    const userProducts = await ProductsXUser.findAll({
+      where: { userID_user: userId, units: { [Sequelize.Op.gt]: 0 } },
+      attributes: ['productsID_product', 'units']
+    });
+
+    // Conversia rezultatelor într-un format utilizabil
+    const userProductsMap = userProducts.reduce((acc, cur) => {
+      acc[cur.productsID_product] = cur.units;
+      return acc;
+    }, {});
+
+    // Obținerea tuturor meselor, inclusiv atributul 'id_mealsXproducts' în 'MealXProducts'
     const allMeals = await Meals.findAll({
       include: [{
         model: MealsXProducts,
         as: 'MealXProducts',
+        attributes: ['id_mealsXproducts', 'productsID_meals', 'mealsID_meals', 'quantity_ingredient', 'required_units'], // Includem 'id_mealsXproducts'
         include: [{
           model: Products,
-          as: 'Product'
+          as: 'Product',
+          attributes: ['id_product', 'name_product'] // Specificarea atributelor necesare
         }]
       }]
     });
 
+    // Filtrarea meselor valide pe baza produselor utilizatorului și a unităților necesare
     const validMeals = allMeals.filter(meal => {
-      const mealProductIds = meal.MealXProducts.map(mxp => mxp.productsID_meals);
-      
-      return mealProductIds.every(pid => userProductIds.includes(pid));
+      return meal.MealXProducts.every(mxp => {
+        // Verificarea dacă utilizatorul are produsul necesar cu unități suficiente
+        const requiredUnits = mxp.required_units;
+        const userUnits = userProductsMap[mxp.productsID_meals];
+        return userUnits && userUnits >= requiredUnits;
+      });
     });
 
     res.json(validMeals);
@@ -62,6 +77,10 @@ router.get('/generateMealFromProducts', authenticateJWT, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+
+
+
 
 router.get('/details/:id', authenticateJWT, async (req, res) => {
   try {
@@ -91,22 +110,25 @@ router.get('/mealWithBudget', authenticateJWT, async (req, res) => {
     const user = await User.findByPk(userId);
     const budget = user.budget;
 
-    const meal = await Meals.findOne({
-      where: { price_meal: { [Sequelize.Op.lte]: budget }, our_rec_meal: true },
-      order: [[ 'price_meal', 'DESC' ]],
-      attributes: ['id_meal', 'name_meal', 'base64CodImageMeal'],
+    // Query to find all meals with a price less than or equal to the user's budget
+    const mealsWithinBudget = await Meals.findAll({
+      where: { price_meal: { [Sequelize.Op.lte]: budget } },
+      order: [['price_meal', 'DESC']],
+      attributes: ['id_meal', 'name_meal', 'price_meal', 'base64CodImageMeal'],
     });
 
-    if (meal) {
-      res.json([meal]);
+    // Return the meals if found, otherwise return a message
+    if (mealsWithinBudget.length > 0) {
+      res.json(mealsWithinBudget);
     } else {
-      res.json({ message: "We didn't find a meal with exactly your budget! Please try again" });
+      res.json({ message: "No meals found within your budget!" });
     }
   } catch (error) {
-    console.error('Error fetching meal with budget:', error);
+    console.error('Error fetching meals within budget:', error);
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 router.get('/recommendedMeals', authenticateJWT, async (req, res) => {
   try {

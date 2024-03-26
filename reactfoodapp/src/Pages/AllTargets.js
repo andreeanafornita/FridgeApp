@@ -9,8 +9,15 @@ const AllTargets = () => {
 
     // Simulating a function to fetch all targets from backend
     const fetchAllTargets = async () => {
+        const token = localStorage.getItem('jwtToken'); // Preia tokenul JWT stocat local
         try {
-            const response = await fetch('http://localhost:8081/alltargets/get'); // Aici presupunem că serverul tău rulează pe localhost portul 3000
+            const response = await fetch('http://localhost:8081/alltargets/get', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Include tokenul JWT în headers
+                }
+            });
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -20,6 +27,7 @@ const AllTargets = () => {
             console.error("There was a problem with fetching targets:", error);
         }
     };
+    
     
 
 
@@ -70,9 +78,14 @@ const AllTargets = () => {
             alert('Error adding target to Your Targets.'); // Mesaj de eroare
         }
     };
-    
+    const profileStyle = {
+   
+        marginBottom: {
+            marginBottom: '-10em'
+        },
+    };
     return (
-        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px' }}>
+        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px',...profileStyle.marginBottom }}>
             <h1 style={{ fontSize: '48px', color: 'red', textAlign: 'center' }}>All Targets</h1>
             <div style={{ marginTop: '30px' }}>
                 {allTargets.map(target => {

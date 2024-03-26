@@ -5,17 +5,26 @@ import { jwtDecode } from 'jwt-decode'; // Correctly import jwtDecode as a named
 //import jwtDecode from 'jwt-decode'; // Correct way to import jwtDecode
 const ProfilePage = () => {
     const [userInfo, setUserInfo] = useState({ username: '', budget: 0 });
-    const [editMode, setEditMode] = useState(false); // Pentru a controla afișarea formularului de editare
+    const [editMode, setEditMode] = useState(false);
+    const [editUsernameMode, setEditUsernameMode] = useState(false);
+    const [editPasswordMode, setEditPasswordMode] = useState(false);
     const [newBudget, setNewBudget] = useState('');
+    const [newUsername, setNewUsername] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+
+    useEffect(() => {
+        fetchUserInfo();
+    }, []);
+
     const fetchUserInfo = async () => {
         try {
             const token = localStorage.getItem('jwtToken');
             if (!token) {
                 throw new Error('No token found');
             }
-            // Decode the token to get the user ID
             const decoded = jwtDecode(token);
-            const userId = decoded.id_user; // Replace 'id' with the actual key where the user ID is stored in your JWT payload
+            const userId = decoded.id_user;
 
             const response = await fetch(`http://localhost:8081/users/user/${userId}`, {
                 headers: {
@@ -26,65 +35,136 @@ const ProfilePage = () => {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            setUserInfo({ username: data.username || '', // Use || '' to default to an empty string if undefined
-            budget: data.budget || 0 });
+            setUserInfo({
+                username: data.username || '',
+                budget: data.budget || 0
+            });
         } catch (error) {
             console.error("There was a problem with fetching user information:", error);
         }
     };
 
-    useEffect(() => {
-        fetchUserInfo(); // Fetch user info on component mount
-    }, []);
     const handleEditClick = () => {
-        setEditMode(true); // Activează modul de editare
-        setNewBudget(userInfo.budget); // Inițializează input-ul cu bugetul actual
+        setEditMode(true);
+        setNewBudget(userInfo.budget);
     };
 
     const handleBudgetChange = (e) => {
-        setNewBudget(e.target.value); // Actualizează valoarea introdusă de utilizator
+        setNewBudget(e.target.value);
     };
 
     const handleBudgetSubmit = async (e) => {
-        e.preventDefault(); // Prevenirea reîncărcării paginii
+        e.preventDefault();
     
         try {
-            const token = localStorage.getItem('jwtToken'); // Preia tokenul JWT din localStorage
+            const token = localStorage.getItem('jwtToken');
             if (!token) {
                 throw new Error('No token found');
             }
     
-            // Decode the token to get the user ID
             const decoded = jwtDecode(token);
-            const userId = decoded.id_user; // Asumând că `id_user` este cheia în payload-ul JWT unde este stocat ID-ul utilizatorului
+            const userId = decoded.id_user;
     
             const response = await fetch(`http://localhost:8081/users/updateBudget`, {
-                method: 'PUT', // Metoda HTTP pentru actualizare
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Include tokenul JWT în antet pentru autentificare
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
-                    budget: newBudget // Corpul cererii cu noul buget
+                    budget: newBudget
                 })
             });
     
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Failed to update budget');
             }
     
-            const updatedUserInfo = await response.json(); // Preia răspunsul actualizat de la server
+            // Assuming your server responds with the updated user info, including the new budget
+            const updatedUser = await response.json();
+            setUserInfo(prevState => ({
+                ...prevState,
+                budget: updatedUser.budget
+            }));
     
-            setUserInfo({ // Actualizează starea locală cu noile informații ale utilizatorului
-                ...userInfo,
-                budget: updatedUserInfo.budget
-            });
-            
-            setEditMode(false); // Deactivează modul de editare după actualizare
+            setEditMode(false); // Exit edit mode
         } catch (error) {
             console.error("Error updating user's budget:", error);
         }
     };
+    
+
+    const handleUsernameChangeSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+    
+            const response = await fetch('http://localhost:8081/users/updateUsername', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    newUsername: newUsername,
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to update username');
+            }
+    
+            const updatedUser = await response.json();
+            setUserInfo(prevState => ({
+                ...prevState,
+                username: updatedUser.username
+            }));
+    
+            setEditUsernameMode(false); // Exit edit mode
+            setNewUsername(''); // Reset the new username field
+        } catch (error) {
+            console.error("Error updating user's username:", error);
+        }
+    };
+    
+    const handlePasswordChangeSubmit = async (e) => {
+        e.preventDefault();
+    
+        try {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                throw new Error('No token found');
+            }
+    
+            const response = await fetch('http://localhost:8081/users/updatePassword', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword,
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to update password');
+            }
+    
+            // Reset form fields after successful password change
+            setCurrentPassword('');
+            setNewPassword('');
+            setEditPasswordMode(false); // Exit edit mode
+        } catch (error) {
+            console.error("Error updating user's password:", error);
+        }
+    };
+    
     
     const profileStyle = {
         container: {
@@ -93,7 +173,7 @@ const ProfilePage = () => {
             alignItems: 'center',
             justifyContent: 'center',
             maxWidth: '600px',
-            margin: '5em auto',
+            margin: '2em auto',
             padding: '20px',
             textAlign: 'center',
             backgroundColor: '#f3f3f3',
@@ -126,7 +206,9 @@ const ProfilePage = () => {
             lineHeight: '1.6',
             textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
         },
-        
+        marginBottom: {
+            marginBottom: '-2.5em'
+        },
     };
     
     const buttonStyle = {
@@ -163,41 +245,68 @@ const ProfilePage = () => {
     };
     const budget = parseFloat(userInfo.budget);
     return (
-        <div style={profileStyle.container}>
+        <div style={{...profileStyle.container, ...profileStyle.marginBottom}}>
             <FontAwesomeIcon icon={faUserCircle} size="6x" style={profileStyle.icon} />
             <div>
                 <h2 style={profileStyle.infoText}>Username: {userInfo.username}</h2>
-                {editMode ? (
-                    <form onSubmit={handleBudgetSubmit}>
-                        <input 
-                       
-                            type="number" 
-                            value={newBudget} 
-                            onChange={handleBudgetChange} 
+                {editUsernameMode ? (
+                    <form onSubmit={handleUsernameChangeSubmit}>
+                        <input
+                            type="text"
+                            value={newUsername}
+                            onChange={(e) => setNewUsername(e.target.value)}
                             style={inputStyle}
                         />
-                        <button type="submit" style={submitButtonStyle}>Submit</button>
+                        <button type="submit" style={buttonStyle}>Change Username</button>
                     </form>
                 ) : (
-                    <>
-                     <h2 style={profileStyle.infoText}>Budget: {Number.isNaN(budget) ? '0.00' : budget.toFixed(2)} RON</h2>
-                        <button onClick={handleEditClick}style={buttonStyle}>Change Budget</button>
-                    </>
+                    <button onClick={() => setEditUsernameMode(true)} style={buttonStyle}>Edit Username</button>
+                )}
+    
+                {/* Secțiunea pentru Budget */}
+                <h2 style={profileStyle.infoText}>
+                    Budget: {Number.isNaN(parseFloat(userInfo.budget)) ? '0.00' : parseFloat(userInfo.budget).toFixed(2)} RON
+                </h2>
+                {editMode ? (
+                    <form onSubmit={handleBudgetSubmit}>
+                        <input
+                            type="number"
+                            value={newBudget}
+                            onChange={handleBudgetChange}
+                            style={inputStyle}
+                        />
+                        <button type="submit" style={buttonStyle}>Submit</button>
+                    </form>
+                ) : (
+                    <button onClick={handleEditClick} style={buttonStyle}>Edit Budget</button>
+                )}
+    
+                {editPasswordMode ? (
+                    <form onSubmit={handlePasswordChangeSubmit}>
+                        <input
+                            type="password"
+                            placeholder="Current Password"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            style={inputStyle}
+                        />
+                        <input
+                            type="password"
+                            placeholder="New Password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            style={inputStyle}
+                        />
+                        <button type="submit" style={buttonStyle}>Change Password</button>
+                    </form>
+                ) : (
+                    <button onClick={() => setEditPasswordMode(true)} style={buttonStyle}>Change Password</button>
                 )}
             </div>
+            
         </div>
     );
-
-    // return (
-    //     <div style={profileStyle.container}>
-    //         <FontAwesomeIcon icon={faUserCircle} size="6x" style={profileStyle.icon} />
-    //         <div>
-    //             <h2 style={profileStyle.infoText}>Username: {userInfo.username}</h2>
-    //             <h2 style={profileStyle.infoText}>Budget: {userInfo.budget.toFixed(2)} RON</h2>
-    //             {/* Additional user information can be added here */}
-    //         </div>
-    //     </div>
-    // );
-};
-
+    
+    
+                };
 export default ProfilePage;

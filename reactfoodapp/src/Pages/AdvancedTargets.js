@@ -33,9 +33,40 @@ const AdvancedTargets = () => {
     useEffect(() => {
         fetchAdvancedTargets();
     }, []);
-
+    const onAddTargetClick = async (id_target) => {
+        const token = localStorage.getItem('jwtToken'); // Obține tokenul JWT stocat local
+        console.log('Token used for request:', token);
+        try {
+            const response = await fetch('http://localhost:8081/yourTargets/addYourTarget', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${localStorage.getItem('jwtToken')}` // Include tokenul JWT aici
+                },
+                body: JSON.stringify({ id_target })
+              });
+              console.log('Request sent to /yourTargets/addYourTarget with ID:', id_target);
+    
+            if (!response.ok) {
+                throw new Error('Failed to add target to Your Targets');
+            }
+    
+            // Opcțional: Actualizează lista de targeturi din componenta "Your Targets"
+            // Aceasta poate fi realizată prin apelarea unei funcții de actualizare sau printr-un mesaj global (e.g., folosind Context API sau Redux)
+            alert('Target added successfully to Your Targets!'); // Mesaj de succes
+        } catch (error) {
+            console.error("Error adding target to Your Targets:", error);
+            alert('Error adding target to Your Targets.'); // Mesaj de eroare
+        }
+    };
+    const profileStyle = {
+   
+        marginBottom: {
+            marginBottom: '6em'
+        },
+    };
     return (
-        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px' }}>
+        <div style={{ color: 'black', backgroundColor: 'white', padding: '20px',...profileStyle.marginBottom }}>
             <h1 style={{ fontSize: '48px', color: 'red', textAlign: 'center' }}>Advanced Targets</h1>
             <div style={{ marginTop: '30px' }}>
                 {advancedTargets.map(target => {
@@ -46,7 +77,19 @@ const AdvancedTargets = () => {
                                 <h2 style={{ color: 'black', fontWeight: 'bold', fontSize: '24px' }}>{title}</h2>
                                 <p style={{ color: 'black', fontSize: '18px' }}>{content}</p>
                             </div>
-                         
+                            <button
+                                style={{
+                                    backgroundColor: 'red',
+                                    color: 'white',
+                                    borderRadius: '5px',
+                                    padding: '10px 15px',
+                                    border: 'none',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => onAddTargetClick(target.id_target)}
+                            >
+                                Add
+                            </button>
                         </div>
                     );
                 })}

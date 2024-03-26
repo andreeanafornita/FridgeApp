@@ -34,9 +34,14 @@ export default function DessertsPage() {
   const handleViewDessertClick = (dessertId) => {
     navigate(`/dessert/${dessertId}`);
   };
-
+  const profileStyle = {
+      
+    marginBottomTargets: {
+        marginBottom: '10em'
+    },
+};
   return (
-    <div style={{ paddingTop: '40px' }}> {/* Ajustează această valoare în funcție de înălțimea navbar-ului tău */}
+    <div style={{ paddingTop: '40px',...profileStyle.marginBottomTargets }}> {/* Ajustează această valoare în funcție de înălțimea navbar-ului tău */}
         <h2>Desserts based on your fridge contents:</h2>
         <div style={{ paddingTop: '20px' }}></div>
         <div className="desserts-container">

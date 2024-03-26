@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import backgroundImage from '../images/logo_rosu.png';
 const RegisterForm = () => {
     const [formData, setFormData] = useState({
         username: '',
@@ -118,10 +118,10 @@ const RegisterForm = () => {
     
       const formContainerStyle = {
         backgroundColor: '#FFEEEE', // Changed to very light red
-        padding: '20px',
+        padding: '18px',
         borderRadius: '20px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-        border: '7px solid red',
+        border: '7px solid black',
         width: '100%',
         maxWidth: '400px',
         margin: 'auto',
@@ -172,9 +172,22 @@ const RegisterForm = () => {
         textAlign: 'center',
         marginBottom: '1rem',
       };
+      const backgroundStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '95vh', // Asigură-te că pagina are înălțimea completă a viewport-ului
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: '100% auto', // Scala imaginea pe lățime, menține proporțiile
+      backgroundPosition: 'center center', 
+        backgroundRepeat: 'no-repeat',
+       
+      };
     
       // JSX
       return (
+        <div style={backgroundStyle}>
         <div style={containerStyle}>
           <div style={formContainerStyle}>
             <h2 style={titleStyle}>Register</h2>
@@ -223,6 +236,7 @@ const RegisterForm = () => {
             {error && <p style={errorStyle}>{error}</p>}
             <button id='registerBtn' style={buttonStyle} onClick={handleSubmit}>Register</button>
           </div>
+        </div>
         </div>
       );
       
