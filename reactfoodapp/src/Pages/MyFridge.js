@@ -1,12 +1,13 @@
 import PreviousSearches from "../components/PreviousSearches";
 import FridgeCard from "../components/FridgeCard";
-
+import logo from "../images/logo_rosu.png";
 import React, { useEffect, useState } from 'react';
 
 export default function Recepies(){
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(null);
     const [selectedProductName, setSelectedProductName] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -30,9 +31,11 @@ export default function Recepies(){
                     title: product.name_product,
                     image: product.base64CodIamgeProduct // Asigură-te că numele propriețății este corect
                 })));
+                setLoading(false);
             } catch (error) {
                 console.error('Fetch error:', error);
                 setError(`Failed to fetch: ${error.message}`);
+                setLoading(false);
             }
         };
 
@@ -49,7 +52,21 @@ export default function Recepies(){
     if (error) {
         return <div>Error: {error}</div>; // Afisăm eroarea în cazul în care există
     }
-
+    if (loading) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <img src={logo} alt="Loading..." style={{ width: '100px', animation: 'spin 2s linear infinite' }} />
+                <style>
+                    {`
+                    @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    `}
+                </style>
+            </div>
+        );
+    }
     return (
         <div>
             <PreviousSearches onProductSelect={onProductSelect} />
