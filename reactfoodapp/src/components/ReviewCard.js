@@ -25,7 +25,7 @@ export default function ReviewCard({ type, id }) {
           setReviews(data);
         } catch (error) {
           console.error(`Error fetching ${type} reviews:`, error);
-          setError(`Failed to fetch ${type} reviews`);
+          setError(`There are no ${type} reviews. Please try again later`);
         } finally {
           setIsLoading(false);
         }

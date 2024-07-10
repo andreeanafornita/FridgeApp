@@ -47,7 +47,7 @@ export default function MealView() {
       <div style={{ backgroundColor: '#fff', borderRadius: '16px', padding: '20px', marginBottom: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <p style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px', color: '#333' }}>{mealDetails.name_meal}</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Calories: {mealDetails.calories_meal}kcal</p>
-        <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Glucides: {mealDetails.glucides_meal}g</p>
+        <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Carbohydrates: {mealDetails.glucides_meal}g</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Lipides: {mealDetails.lipides_meal}g</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Proteins: {mealDetails.proteins_meal}g</p>
         <p style={{ fontSize: '18px', marginBottom: '8px', color: '#666' }}>Aprox. price: {mealDetails.price_meal} RON</p>

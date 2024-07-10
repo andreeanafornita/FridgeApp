@@ -143,7 +143,7 @@ export default function ProductView() {
         <p style={styles.detail}>Name: {productDetails.name_product}</p>
         <p style={styles.detail}>Base Quantity: {quantityDisplay}</p>
         <p style={styles.detail}>Base Calories: {productDetails.base_calories_product} kcal</p>
-        <p style={styles.detail}>Base Glucides: {productDetails.base_glucides_product} g</p>
+        <p style={styles.detail}>Base Carbohydrates: {productDetails.base_glucides_product} g</p>
         <p style={styles.detail}>Base Lipides: {productDetails.base_lipides_product} g</p>
         <p style={styles.detail}>Base Proteins: {productDetails.base_proteins_product} g</p>
       </div>

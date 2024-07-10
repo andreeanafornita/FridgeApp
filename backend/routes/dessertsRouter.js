@@ -74,6 +74,7 @@ router.get('/generateDessertFromProducts', authenticateJWT, async (req, res) => 
   }
 });
 
+
 router.get('/details/:id', authenticateJWT, async (req, res) => {
   try {
     const dessert = await Desserts.findOne({
