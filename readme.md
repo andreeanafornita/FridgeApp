@@ -1,6 +1,6 @@
 # 🥗 Fridge2Fit 🍎
 
-**Turn your fridge into a personal nutritionist!**
+**Turn your fridge into a personal nutritionist meanwhile eliminating food waste!**
 
 ---
 
